@@ -14,7 +14,7 @@
 @end
 
 @implementation ViewController {
-
+    NSDateFormatter *formatter;
 }
 
 @synthesize picker;
@@ -23,7 +23,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    //formatter = [[NSDateFormatter alloc]init];
+    formatter = [[NSDateFormatter alloc]init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,14 +35,13 @@
 - (IBAction)show:(id)sender {
     picker = [[ALDateTimePicker alloc]initForDate:[NSDate new]];
     picker.datePickerMode = UIDatePickerModeDate;
-    //[picker setDatePickerMode:UIDatePickerModeDate];
     [picker setMinuteInterval:10];
     [picker setDelegate:self];
     [picker presentFromRect:((UIButton *)sender).bounds inView:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:NO];
 }
 
 - (void)log:(NSString *)prefix andDate:(NSDate *)date {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+
     switch (picker.datePickerMode) {
         case UIDatePickerModeDate : {
             [formatter setDateStyle:NSDateFormatterLongStyle];
@@ -72,7 +71,11 @@
 }
 
 -(void)dateTimeSelected:(NSDate *)date {
-    
+    [self log:@"selected" andDate:date];
+}
+
+-(void)cancelled {
+    NSLog(@"cancelled");
 }
 
 @end
